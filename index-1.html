@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lumen &amp; Co. — Everyday things, well made</title>
+<meta name="description" content="Lumen &amp; Co. is a small modern shop for electronics, fashion, accessories, beauty and lifestyle.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='%230f6b5c'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="loader" id="loader" aria-hidden="true"><span class="loader-dot"></span></div>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="#home" class="logo" aria-label="Lumen &amp; Co. home"><span class="logo-mark"></span>Lumen &amp; Co.</a>
+    <nav class="nav-links" id="navLinks" aria-label="Main">
+      <a href="#home">Home</a><a href="#products">Products</a><a href="#categories">Categories</a><a href="#about">About</a><a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" id="searchToggle" aria-label="Search products" aria-expanded="false">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </button>
+      <button class="icon-btn" id="themeToggle" aria-label="Switch to dark mode">
+        <svg viewBox="0 0 24 24"><path d="M21 13A9 9 0 1 1 11 3a7 7 0 0 0 10 10z"/></svg>
+      </button>
+      <button class="icon-btn" id="cartToggle" aria-label="Open cart">
+        <svg viewBox="0 0 24 24"><path d="M5 7h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+        <span class="badge" id="cartCount">0</span>
+      </button>
+      <button class="icon-btn menu-btn" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="search-bar" id="searchBar" hidden>
+    <div class="wrap"><label class="sr-only" for="searchInput">Search products</label>
+      <input type="search" id="searchInput" placeholder="Search products by name…" autocomplete="off"></div>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="home">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="pill">New season, just arrived</p>
+        <h1>Discover Something You’ll Love</h1>
+        <p class="lead">Quality products, beautiful choices, and a shopping experience made for you.</p>
+        <div class="btn-row">
+          <a href="#products" class="btn btn-primary">Shop Now</a>
+          <a href="#categories" class="btn btn-ghost">Explore Products</a>
+        </div>
+        <ul class="hero-facts">
+          <li><strong>Free delivery</strong> over $50</li>
+          <li><strong>30-day</strong> easy returns</li>
+          <li><strong>4.8★</strong> from our customers</li>
+        </ul>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-blob"></div>
+        <img src="images/product1.jpg" alt="Featured product: wireless headphones" data-fallback="Electronics" class="hero-img">
+        <div class="float-card"><span class="float-dot"></span><div><strong>Studio Headphones</strong><small>Best seller this week</small></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="categories">
+    <div class="wrap">
+      <div class="section-head"><h2>Shop by category</h2><p>Pick a corner of the shop and start browsing.</p></div>
+      <div class="cat-grid" id="catGrid"></div>
+    </div>
+  </section>
+
+  <section class="section alt" id="products">
+    <div class="wrap">
+      <div class="section-head"><h2>Our products</h2><p id="resultInfo" aria-live="polite"></p></div>
+      <div class="toolbar">
+        <div class="chips" id="chips" role="group" aria-label="Filter by category"></div>
+        <label class="sort"><span class="sr-only">Sort products</span>
+          <select id="sortSelect">
+            <option value="featured">Sort: Featured</option>
+            <option value="popular">Most popular</option>
+            <option value="low">Price: low to high</option>
+            <option value="high">Price: high to low</option>
+          </select>
+        </label>
+      </div>
+      <div class="product-grid" id="productGrid"></div>
+      <p class="empty" id="emptyState" hidden>No products match your search. Try a different name or category.</p>
+    </div>
+  </section>
+
+  <section class="section" id="add">
+    <div class="wrap add-wrap">
+      <div class="section-head left"><h2>Add a test product</h2>
+        <p>Try the shop as its owner. Products added here live only in this browser tab and disappear on refresh.</p></div>
+      <form class="card-form" id="addForm" novalidate>
+        <div class="upload">
+          <label for="pImage" class="upload-box" id="uploadBox">
+            <img id="imgPreview" alt="Preview of the selected product image" hidden>
+            <span id="uploadHint">Tap to choose an image from your device</span>
+          </label>
+          <input type="file" id="pImage" accept="image/*" class="sr-only">
+        </div>
+        <div class="fields">
+          <label>Product name<input type="text" id="pName" required maxlength="60" placeholder="e.g. Linen Overshirt"></label>
+          <div class="two">
+            <label>Price (USD)<input type="number" id="pPrice" required min="0.01" step="0.01" placeholder="49.00"></label>
+            <label>Category<select id="pCategory" required></select></label>
+          </div>
+          <label>Description<textarea id="pDesc" rows="3" maxlength="300" placeholder="A short description customers will see"></textarea></label>
+          <p class="form-error" id="addError" role="alert" hidden></p>
+          <button type="submit" class="btn btn-primary">Add to shop</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section class="section alt" id="about">
+    <div class="wrap about-grid">
+      <div class="section-head left"><h2>A small shop with big care</h2></div>
+      <div class="about-text">
+        <p>Lumen &amp; Co. started with a simple idea: buy fewer things, and love them longer. We pick every item ourselves, test it at home, and only stock what we would give to a friend.</p>
+        <p>From everyday tech to skin care that actually works, each product is chosen for quality, honest pricing and a design that still looks good years from now.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contact">
+    <div class="wrap">
+      <div class="section-head"><h2>Get in touch</h2><p>Questions about an order? We usually reply within a day.</p></div>
+      <div class="contact-grid">
+        <a class="contact-card" href="tel:+15550123456"><strong>Phone</strong><span>+1 (555) 012-3456</span></a>
+        <a class="contact-card" href="mailto:hello@lumenandco.example"><strong>Email</strong><span>hello@lumenandco.example</span></a>
+        <div class="contact-card"><strong>Location</strong><span>24 Market Street, Portland, OR</span></div>
+      </div>
+      <div class="socials" aria-label="Social media">
+        <a href="#contact" class="btn btn-ghost" data-social="Instagram">Instagram</a>
+        <a href="#contact" class="btn btn-ghost" data-social="Facebook">Facebook</a>
+        <a href="#contact" class="btn btn-ghost" data-social="X">X</a>
+        <a href="#contact" class="btn btn-ghost" data-social="TikTok">TikTok</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap foot-grid">
+    <div><a href="#home" class="logo"><span class="logo-mark"></span>Lumen &amp; Co.</a><p>Everyday things, well made.</p></div>
+    <div><h3>Quick links</h3><a href="#home">Home</a><a href="#products">Products</a><a href="#about">About</a><a href="#contact">Contact</a></div>
+    <div><h3>Categories</h3><div id="footCats"></div></div>
+    <div><h3>Follow</h3><a href="#contact" data-social="Instagram">Instagram</a><a href="#contact" data-social="Facebook">Facebook</a><a href="#contact" data-social="X">X</a></div>
+  </div>
+  <div class="wrap copy">© <span id="year">2026</span> Lumen &amp; Co. All rights reserved.</div>
+</footer>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<aside class="drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-labelledby="cartTitle" hidden>
+  <div class="drawer-head"><h2 id="cartTitle">Your cart</h2><button class="icon-btn" data-close aria-label="Close cart">✕</button></div>
+  <div class="drawer-body" id="cartItems"></div>
+  <div class="drawer-foot" id="cartFoot">
+    <div class="row"><span>Items</span><strong id="cartItemsTotal">0</strong></div>
+    <div class="row"><span>Subtotal</span><strong id="cartSubtotal">$0.00</strong></div>
+    <button class="btn btn-primary block" id="checkoutBtn">Checkout</button>
+    <button class="link-btn" id="clearCart">Clear cart</button>
+  </div>
+</aside>
+
+<div class="modal" id="productModal" role="dialog" aria-modal="true" aria-labelledby="mName" hidden>
+  <div class="modal-box wide">
+    <button class="icon-btn modal-x" data-close aria-label="Close details">✕</button>
+    <div class="detail">
+      <img id="mImg" alt="" class="detail-img">
+      <div class="detail-info">
+        <p class="cat-tag" id="mCat"></p>
+        <h2 id="mName"></h2>
+        <p class="stars" id="mRating"></p>
+        <p class="price big" id="mPrice"></p>
+        <p id="mDesc" class="desc"></p>
+        <div class="qty-row">
+          <div class="qty" role="group" aria-label="Quantity">
+            <button id="mMinus" aria-label="Decrease quantity">−</button><output id="mQty">1</output><button id="mPlus" aria-label="Increase quantity">+</button>
+          </div>
+          <button class="btn btn-primary" id="mAdd">Add to cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="coTitle" hidden>
+  <div class="modal-box">
+    <button class="icon-btn modal-x" data-close aria-label="Close checkout">✕</button>
+    <h2 id="coTitle">Checkout</h2>
+    <form id="checkoutForm" novalidate>
+      <label>Full name<input type="text" id="coName" required autocomplete="name"></label>
+      <label>Phone number<input type="tel" id="coPhone" required autocomplete="tel"></label>
+      <label>Address<textarea id="coAddress" rows="2" required autocomplete="street-address"></textarea></label>
+      <div class="summary" id="coSummary"></div>
+      <div class="row total"><span>Total</span><strong id="coTotal">$0.00</strong></div>
+      <p class="form-error" id="coError" role="alert" hidden></p>
+      <button type="submit" class="btn btn-primary block">Place Order</button>
+    </form>
+  </div>
+</div>
+
+<div class="modal" id="successModal" role="dialog" aria-modal="true" aria-labelledby="okTitle" hidden>
+  <div class="modal-box success">
+    <div class="check"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></div>
+    <h2 id="okTitle">Your order has been received!</h2>
+    <p id="okText">Thank you. We will contact you soon to confirm delivery.</p>
+    <button class="btn btn-primary" data-close>Continue shopping</button>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="script.js"></script>
+</body>
+</html>
